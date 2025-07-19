@@ -305,6 +305,23 @@ html,
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
+
+  /* Optional: Style in global CSS if not using Tailwind plugins */
+.toggle-checkbox:checked::before {
+  transform: translateX(1.25rem);
+}
+.toggle-checkbox::before {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  height: 1rem;
+  width: 1rem;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 0.2s ease-in-out;
+}
+
   
   /* Animations */
   @keyframes fadeIn {

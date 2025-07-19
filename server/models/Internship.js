@@ -6,6 +6,10 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  companyBanner: {
+    type: String,
+    required: true
+  },
   domain: {
     type: String,
     required: true
@@ -46,13 +50,38 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  jobProfile: {
+  jobProfile: { // Equivalent to eligibilty in the frontend
     type: String,
     required: true
   },
   shiftType: {
     type: String,
     required: true
+  },
+  companyDesc: {
+    type: String,
+    required: true
+  },
+  softSkills: [{
+    type: String,
+    required: true
+  }],
+  perks: {
+    type: String,
+    required: true
+  },
+  freeOrPaid:{
+    type: Boolean,
+    required: true
+  },
+  lastDateToApply: {
+    type: Date,
+    required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    // required: true
   }
 }, {
   timestamps: true

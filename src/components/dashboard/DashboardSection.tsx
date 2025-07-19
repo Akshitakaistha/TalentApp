@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 
 interface DashboardSectionProps {
   title: string;
@@ -23,38 +24,82 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
   tableHeaders,
   renderTableRow,
 }) => {
-  const [items, setItems] = useState([]);
+  const { getToken , user } = useAuth(); 
+  const [items, setItems] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
+  const [editingItem, setEditingItem] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [user?.id]);
+
+
+  const authHeader = () => {
+    const token = getToken();
+    return {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+  };
+
+  // const fetchItems = async () => {
+  //   try {
+  //     const token = getToken();
+  //     const { data } = await axios.get(
+  //       `http://localhost:3000/api/${apiEndpoint}`,
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     console.log('API response data:', data);
+  //     if(data?.data !== null){
+  //       setItems(data?.data);
+  //     }
+  //     setItems(data) ;
+  //   } catch (error) {
+  //     console.error('Error fetching items:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/${apiEndpoint}`);
-      setItems(response.data);
+      const token = getToken();
+      const { data } = await axios.get(
+        `http://localhost:3000/api/${apiEndpoint}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      console.log('API response data:', data);
+  
+      // Handle flexible API response structures
+      if (data?.data && Array.isArray(data.data)) {
+        setItems(data.data); // preferred nested format
+      } else if (Array.isArray(data)) {
+        setItems(data); // flat array directly in response
+      } else {
+        console.warn('Unexpected data format:', data);
+        setItems([]); // fallback to empty
+      }
     } catch (error) {
       console.error('Error fetching items:', error);
+      setItems([]);
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const handleSubmit = async (formData: FormData) => {
     try {
       if (editingItem) {
         // Update existing item
-        await axios.put(`http://localhost:3000/api/${apiEndpoint}/${editingItem._id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        await axios.put(`http://localhost:3000/api/${apiEndpoint}/${editingItem._id}`, formData, authHeader()
+        );
       } else {
         // Create new item
-        await axios.post(`http://localhost:3000/api/${apiEndpoint}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        await axios.post(`http://localhost:3000/api/${apiEndpoint}`, formData,authHeader());
       }
       fetchItems();
       setIsModalOpen(false);
@@ -72,7 +117,11 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        await axios.delete(`http://localhost:3000/api/${apiEndpoint}/${id}`);
+        const token = getToken();
+        await axios.delete(
+          `http://localhost:3000/api/${apiEndpoint}/${id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         fetchItems();
       } catch (error) {
         console.error('Error deleting item:', error);
@@ -125,14 +174,14 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {items.length === 0 ? (
+              {!items || items.length === 0 ? (
                 <tr>
                   <td colSpan={tableHeaders.length + 1} className="px-6 py-4 text-center text-gray-500">
                     No items found. Create your first {title.toLowerCase()} entry.
                   </td>
                 </tr>
               ) : (
-                items.map((item) => renderTableRow(item, handleEdit, handleDelete))
+                items?.map((item) => renderTableRow(item, handleEdit, handleDelete))
               )}
             </tbody>
           </table>

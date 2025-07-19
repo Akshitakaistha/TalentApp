@@ -2,11 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const Global = require('../models/Global');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 // GET all global programs
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const programs = await Global.find().sort({ createdAt: -1 });
     res.json(programs);
@@ -42,32 +42,16 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-router.put('/:id', auth, upload.single('banner'), async (req, res) => {
+// New route to get global details by ID
+router.get('/:id', async (req, res) => {
   try {
-    const updateData = {
-      ...req.body,
-      skills: Array.isArray(req.body.skills)
-        ? req.body.skills
-        : req.body.skills.split(',').map((s) => s.trim())
-    };
-
-    if (req.file) {
-      updateData.banner = `/uploads/${req.file.filename}`;
-    }
-
-    const updatedGlobalCourse = await Global.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-
-    if (!updatedGlobalCourse) {
+    const global = await Global.findById(req.params.id);
+    if (!global) {
       return res.status(404).json({ message: 'Course not found' });
     }
-
-    res.json(updatedGlobalCourse);
+    res.json(global);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 

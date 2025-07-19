@@ -1,6 +1,7 @@
 import React from 'react';
 import { Award, Clock, CreditCard, MapPin, Building2, ExternalLink, Star, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../../App';
 
 interface PGPCourse {
@@ -135,13 +136,15 @@ const PGPCard: React.FC<PGPCourseCardProps> = ({ course }) => {
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-2">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Apply Now
-          </motion.button>
+          <Link to={`/postgrads/${course?._id}`} className="flex-1">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Apply Now
+            </motion.button>
+          </Link>
           
           {/* <motion.button
             whileHover={{ scale: 1.02 }}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Globe, MapPin, Clock, Award, ExternalLink, Plane, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../../App';
 
 interface GlobalProgram {
@@ -142,13 +143,15 @@ const GlobalProgramCard: React.FC<GlobalProgramCardProps> = ({ program }) => {
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-2">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Apply Now
-          </motion.button>
+          <Link to={`/globals/${program?._id}`} className="flex-1">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Apply Now
+            </motion.button>
+          </Link>
           
           {/* <motion.button
             whileHover={{ scale: 1.02 }}

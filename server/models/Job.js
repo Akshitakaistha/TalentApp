@@ -6,6 +6,10 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  companyBanner: {
+    type: String,
+    required: true
+  },
   industryType : {
     type: String,
     required: true
@@ -57,6 +61,43 @@ const jobSchema = new mongoose.Schema({
   experience: {
     type: String,
     required: true
+  },
+  applicationDeadline: { // New details
+    type: Date,
+    required: true
+  },
+  openings: {
+    type: Number,
+    required: true
+  },
+  perks: {
+    type: String,
+    required: true
+  },
+  eligibility: {
+    type: String, 
+    required: true
+  },
+  foundedYear: {
+    type: Number,
+    required: true
+  },
+  companyAddress: {
+    type: String, 
+    required: true
+  },
+  hiringProcess: {
+    type: String,
+    required: true
+  },
+  companyType: {
+    type: String,
+    required: false
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    // required: true
   }
 }, {
   timestamps: true

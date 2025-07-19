@@ -1,12 +1,15 @@
-
 const express = require('express');
 const router = express.Router();
 const Bootcamp = require('../models/Bootcamp');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const multiUpload = upload.fields([
+  { name: 'bootcampBanner', maxCount: 1 },
+  { name: 'companyBanner', maxCount: 1 }
+]);
 
 // GET all bootcamps
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const bootcamps = await Bootcamp.find().sort({ createdAt: -1 });
     res.json(bootcamps);
@@ -16,11 +19,12 @@ router.get('/', auth, async (req, res) => {
 });
 
 // POST create bootcamp
-router.post('/', auth, upload.single('bootcampBanner'), async (req, res) => {
+router.post('/', auth, multiUpload, async (req, res) => {
   try {
     const bootcampData = {
       ...req.body,
-      bootcampBanner: req.file ? `/uploads/${req.file.filename}` : '',
+      bootcampBanner: req.files['bootcampBanner'] ? `/uploads/${req.files['bootcampBanner'][0].filename}` : '',
+      companyBanner: req.files['companyBanner'] ? `/uploads/${req.files['companyBanner'][0].filename}` : '',
       skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(s => s.trim())
     };
 
@@ -42,33 +46,16 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-// Update
-router.put('/:id', auth, upload.single('bootcampBanner'), async (req, res) => {
+// New route to get bootcamp details by ID
+router.get('/:id', async (req, res) => {
   try {
-    const updateData = {
-      ...req.body,
-      skills: Array.isArray(req.body.skills)
-        ? req.body.skills
-        : req.body.skills.split(',').map((s) => s.trim())
-    };
-
-    if (req.file) {
-      updateData.BootcampBanner = `/uploads/${req.file.filename}`;
-    }
-
-    const updatedBootcamp = await Bootcamp.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-
-    if (!updatedBootcamp) {
+    const bootcamp = await Bootcamp.findById(req.params.id);
+    if (!bootcamp) {
       return res.status(404).json({ message: 'Bootcamp not found' });
     }
-
-    res.json(updatedBootcamp);
+    res.json(bootcamp);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 

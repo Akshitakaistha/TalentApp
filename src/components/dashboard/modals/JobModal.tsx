@@ -1,5 +1,5 @@
 /**
- * Used to crate the modal for the job.
+ * Used to create the modal for the job.
  */
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
@@ -22,7 +22,7 @@ const JobModal: React.FC<JobModalProps> = ({
     jobType: '',
     jobName: '',
     description: '',
-    skills: ['', '', ''],
+    skills: ['', '', '', '', ''],
     companyName: '',
     salaryPackage: '',
     companyWebsiteUrl: '',
@@ -30,10 +30,20 @@ const JobModal: React.FC<JobModalProps> = ({
     workingHours: '',
     jobProfile: '',
     shiftType: '',
-    experience: ''
+    experience: '',
+    applicationDeadline: '',
+    openings: '',
+    perks: '',
+    eligibility: '',
+    foundedYear: '',
+    companyAddress: '',
+    hiringProcess: '',
+    companyType: ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
+  const [companyBannerFile, setCompanyBannerFile] = useState<File | null>(null);
+  const [companyBannerPreviewUrl, setCompanyBannerPreviewUrl] = useState<string>('');
 
   useEffect(() => {
     if (editData) {
@@ -42,7 +52,7 @@ const JobModal: React.FC<JobModalProps> = ({
         jobType: editData.jobType || '',
         jobName: editData.jobName || '',
         description: editData.description || '',
-        skills: editData.skills || ['', '', ''],
+        skills: editData.skills || ['', '', '', '',''],
         companyName: editData.companyName || '',
         salaryPackage: editData.salaryPackage || '',
         companyWebsiteUrl: editData.companyWebsiteUrl || '',
@@ -50,10 +60,25 @@ const JobModal: React.FC<JobModalProps> = ({
         workingHours: editData.workingHours || '',
         jobProfile: editData.jobProfile || '',
         shiftType: editData.shiftType || '',
-        experience: editData.experience || ''
+        experience: editData.experience || '',
+        applicationDeadline: editData.applicationDeadline || '',
+        openings: editData.openings || '',
+        perks: editData.perks || '',
+        eligibility: editData.eligibility || '',
+        foundedYear: editData.foundedYear || '',
+        companyAddress: editData.companyAddress || '',
+        hiringProcess: editData.hiringProcess || '',
+        companyType: editData.companyType || ''
       });
       if (editData.jobBanner) {
-        setPreviewUrl(`http://localhost:3000${editData.jobBanner}`);
+        setBannerPreviewUrl(`http://localhost:3000${editData.jobBanner}`);
+      } else {
+        setBannerPreviewUrl('');
+      }
+      if (editData.companyBanner) {
+        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+      } else {
+        setCompanyBannerPreviewUrl('');
       }
     } else {
       setFormData({
@@ -61,7 +86,7 @@ const JobModal: React.FC<JobModalProps> = ({
         jobType: '',
         jobName: '',
         description: '',
-        skills: ['', '', ''],
+        skills: ['', '', '', '', '',],
         companyName: '',
         salaryPackage: '',
         companyWebsiteUrl: '',
@@ -69,10 +94,20 @@ const JobModal: React.FC<JobModalProps> = ({
         workingHours: '',
         jobProfile: '',
         shiftType: '',
-        experience:''
+        experience: '',
+        applicationDeadline: '',
+        openings: '',
+        perks: '',
+        eligibility: '',
+        foundedYear: '',
+        companyAddress: '',
+        hiringProcess: '',
+        companyType: ''
       });
-      setPreviewUrl('');
+      setBannerPreviewUrl('');
       setBannerFile(null);
+      setCompanyBannerPreviewUrl('');
+      setCompanyBannerFile(null);
     }
   }, [editData, isOpen]);
 
@@ -93,12 +128,21 @@ const JobModal: React.FC<JobModalProps> = ({
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setBannerFile(file);
       const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      setBannerPreviewUrl(url);
+    }
+  };
+
+  const handleCompanyBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCompanyBannerFile(file);
+      const url = URL.createObjectURL(file);
+      setCompanyBannerPreviewUrl(url);
     }
   };
 
@@ -113,9 +157,12 @@ const JobModal: React.FC<JobModalProps> = ({
       } else {
         submitData.append(key, value as string);
       }
-    })
+    });
     if (bannerFile) {
       submitData.append('jobBanner', bannerFile);
+    }
+    if (companyBannerFile) {
+      submitData.append('companyBanner', companyBannerFile);
     }
     onSubmit(submitData);
   };
@@ -133,7 +180,7 @@ const JobModal: React.FC<JobModalProps> = ({
           <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleBannerFileChange}
             className="hidden"
             id="banner-upload"
           />
@@ -141,12 +188,37 @@ const JobModal: React.FC<JobModalProps> = ({
             htmlFor="banner-upload"
             className="cursor-pointer flex flex-col items-center"
           >
-            {previewUrl ? (
-              <img src={previewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+            {bannerPreviewUrl ? (
+              <img src={bannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
             ) : (
               <Upload className="h-12 w-12 text-gray-400 mb-2" />
             )}
             <span className="text-sm text-gray-600">Click to upload banner</span>
+          </label>
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Company Banner
+        </label>
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleCompanyBannerFileChange}
+            className="hidden"
+            id="company-banner-upload"
+          />
+          <label
+            htmlFor="company-banner-upload"
+            className="cursor-pointer flex flex-col items-center"
+          >
+            {companyBannerPreviewUrl ? (
+              <img src={companyBannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+            ) : (
+              <Upload className="h-12 w-12 text-gray-400 mb-2" />
+            )}
+            <span className="text-sm text-gray-600">Click to upload company banner</span>
           </label>
         </div>
       </div>
@@ -206,7 +278,7 @@ const JobModal: React.FC<JobModalProps> = ({
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Skills (3 required)
+          Skills (5 required)
         </label>
         <div className="space-y-2">
           {formData.skills.map((skill, index) => (
@@ -319,7 +391,7 @@ const JobModal: React.FC<JobModalProps> = ({
           value={formData.jobProfile}
           onChange={handleInputChange}
           rows={3}
-          className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
@@ -336,6 +408,110 @@ const JobModal: React.FC<JobModalProps> = ({
             required
           />
         </div>
+        <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Application Deadline
+    </label>
+    <input
+      type="date"
+      name="applicationDeadline"
+      value={formData.applicationDeadline}
+      onChange={handleInputChange}
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      required
+    />
+  </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+          Openings
+          </label>
+          <input
+            type="number"
+            name="openings"
+            value={formData.openings}
+            onChange={handleInputChange}
+            className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+          />
+        </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Perks & Benifits
+            </label>
+            <textarea
+              name="perks"
+              value={formData.perks}
+              onChange={handleInputChange}
+              rows={5}
+              className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+             Eligibility
+            </label>
+            <textarea
+              name="eligibility"
+              value={formData.eligibility}
+              onChange={handleInputChange}
+              rows={5}
+              className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Founded Year
+          </label>
+          <input
+            type="number"
+            name="foundedYear"
+            value={formData.foundedYear}
+            onChange={handleInputChange}
+            className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Company Address
+          </label>
+          <input
+            type="text"
+            name="companyAddress"
+            value={formData.companyAddress}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Company Type
+          </label>
+          <input
+            type="text"
+            name="companyType"
+            value={formData.companyType}
+            onChange={handleInputChange}
+            className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            required
+          />
+        </div>
+        <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+             Hiring Process
+            </label>
+            <textarea
+              name="hiringProcess"
+              value={formData.hiringProcess}
+              onChange={handleInputChange}
+              rows={5}
+              className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
       <div className="flex justify-end space-x-4 pt-4">
         <button
           type="button"
@@ -360,7 +536,7 @@ const JobModal: React.FC<JobModalProps> = ({
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-black">
-            {editData ? 'Edit Internship' : 'Create New Internship'}
+            {editData ? 'Edit Job' : 'Create New Job'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />

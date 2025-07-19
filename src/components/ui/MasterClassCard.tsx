@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Calendar, User, ArrowRight, Star, Users, Target, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 interface MasterClass {
   _id: string;
@@ -135,14 +136,18 @@ const MasterClassCard: React.FC<MasterClassCardProps> = ({ masterClass }) => {
         </p> */}
 
         {/* Action Button */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:to-pink-700 text-white font-semibold py-3.5 rounded-2xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl group/btn"
-        >
-          <span>Join Master Class</span>
-          <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-        </motion.button>
+
+
+        <Link to={`/masterclasses/${masterClass._id}`}>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:to-pink-700 text-white font-semibold py-3.5 rounded-2xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl group/btn"
+          >
+            <span>Join Master Class</span>
+            <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+          </motion.button>
+        </Link>
       </div>
 
       {/* Hover Glow Effect */}

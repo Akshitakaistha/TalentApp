@@ -30,7 +30,9 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
     date: ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
+  const [companyBannerFile, setCompanyBannerFile] = useState<File | null>(null);
+  const [companyBannerPreviewUrl, setCompanyBannerPreviewUrl] = useState<string>('');
 
   useEffect(() => {
     if (editData) {
@@ -46,7 +48,14 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
         date: editData.date || ''
       });
       if (editData.masterClassBanner) {
-        setPreviewUrl(`http://localhost:3000${editData.masterClassBanner}`);
+        setBannerPreviewUrl(`http://localhost:3000${editData.masterClassBanner}`);
+      } else {
+        setBannerPreviewUrl('');
+      }
+      if (editData.companyBanner) {
+        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+      } else {
+        setCompanyBannerPreviewUrl('');
       }
     } else {
       setFormData({
@@ -60,8 +69,10 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
         goal: '',
         date:''
       });
-      setPreviewUrl('');
+      setBannerPreviewUrl('');
       setBannerFile(null);
+      setCompanyBannerPreviewUrl('');
+      setCompanyBannerFile(null);
     }
   }, [editData, isOpen]);
 
@@ -82,12 +93,21 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setBannerFile(file);
       const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      setBannerPreviewUrl(url);
+    }
+  };
+
+  const handleCompanyBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCompanyBannerFile(file);
+      const url = URL.createObjectURL(file);
+      setCompanyBannerPreviewUrl(url);
     }
   };
 
@@ -108,6 +128,9 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
     if (bannerFile) {
       submitData.append('masterClassBanner', bannerFile);
     }
+    if (companyBannerFile) {
+      submitData.append('companyBanner', companyBannerFile);
+    }
     
     onSubmit(submitData);
   };
@@ -125,7 +148,7 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={handleBannerFileChange}
                 className="hidden"
                 id="banner-upload"
               />
@@ -133,12 +156,37 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
                 htmlFor="banner-upload"
                 className="cursor-pointer flex flex-col items-center"
               >
-                {previewUrl ? (
-                  <img src={previewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+                {bannerPreviewUrl ? (
+                  <img src={bannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
                 ) : (
                   <Upload className="h-12 w-12 text-gray-400 mb-2" />
                 )}
                 <span className="text-sm text-gray-600">Click to upload banner</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Company Banner
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleCompanyBannerFileChange}
+                className="hidden"
+                id="company-banner-upload"
+              />
+              <label
+                htmlFor="company-banner-upload"
+                className="cursor-pointer flex flex-col items-center"
+              >
+                {companyBannerPreviewUrl ? (
+                  <img src={companyBannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+                ) : (
+                  <Upload className="h-12 w-12 text-gray-400 mb-2" />
+                )}
+                <span className="text-sm text-gray-600">Click to upload company banner</span>
               </label>
             </div>
           </div>

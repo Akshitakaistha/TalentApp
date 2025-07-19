@@ -1,12 +1,15 @@
-
 const express = require('express');
 const router = express.Router();
 const Job = require('../models/Job');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const multiUpload = upload.fields([
+  { name: 'jobBanner', maxCount: 1 },
+  { name: 'companyBanner', maxCount: 1 }
+]);
 
 // GET all jobs
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const jobs = await Job.find().sort({ createdAt: -1 });
     res.json(jobs);
@@ -16,18 +19,28 @@ router.get('/', auth, async (req, res) => {
 });
 
 // POST create job
-router.post('/', auth, upload.single('jobBanner'), async (req, res) => {
+router.post('/', auth, multiUpload, async (req, res) => {
   try {
+    console.log('User info:', req.user);
     const jobData = {
       ...req.body,
-      jobBanner: req.file ? `/uploads/${req.file.filename}` : '',
+      jobBanner: req.files['jobBanner'] ? `/uploads/${req.files['jobBanner'][0].filename}` : '',
+      companyBanner: req.files['companyBanner'] ? `/uploads/${req.files['companyBanner'][0].filename}` : '',
       skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(s => s.trim())
     };
+
+    // Conditionally set createdBy based on user role
+    if (req.user.role === 'admin') {
+      jobData.createdBy = req.user._id;
+    }
+
+    console.log('Job data before save:', jobData);
 
     const job = new Job(jobData);
     await job.save();
     res.status(201).json(job);
   } catch (error) {
+    console.error('Error creating job:', error);
     res.status(400).json({ message: error.message });
   }
 });
@@ -42,32 +55,16 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-router.put('/:id', auth, upload.single('jobBanner'), async (req, res) => {
+// New route to get job details by ID
+router.get('/:id', async (req, res) => {
   try {
-    const updateData = {
-      ...req.body,
-      skills: Array.isArray(req.body.skills)
-        ? req.body.skills
-        : req.body.skills.split(',').map((s) => s.trim())
-    };
-
-    if (req.file) {
-      updateData.jobBanner = `/uploads/${req.file.filename}`;
-    }
-
-    const updatedJob = await Job.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-
-    if (!updatedJob) {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
       return res.status(404).json({ message: 'Job not found' });
     }
-
-    res.json(updatedJob);
+    res.json(job);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 

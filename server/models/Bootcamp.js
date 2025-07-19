@@ -6,6 +6,10 @@ const bootcampSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  companyBanner:{
+    type: String,
+    required: true
+  },
   viewers: {
     type: Number,
     default: 0
@@ -42,6 +46,26 @@ const bootcampSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true
+  },
+  organizerName:  {
+     type: String 
+    },
+organizerWebsite: { 
+  type: String
+ },
+ contactEmail: {
+   type: String 
+  },
+  supportNumber: {
+     type: String
+     },
+certificateAvailable: { 
+  type: Boolean, default: false
+},
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    // required: true
   }
 }, {
   timestamps: true

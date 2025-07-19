@@ -94,6 +94,7 @@
 // export default BootcampCard;
 import React from 'react';
 import { MapPin, Calendar, User, ArrowRight, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { API_BASE_URL } from '../../App';
 
@@ -213,6 +214,7 @@ const BootcampCard: React.FC<BootcampCardProps> = ({ bootcamp }) => {
         </p> */}
 
         {/* Action Button */}
+        <Link to={`/bootcamps/${bootcamp?._id}`}>
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -221,6 +223,7 @@ const BootcampCard: React.FC<BootcampCardProps> = ({ bootcamp }) => {
           <span>Explore Bootcamp</span>
           <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
         </motion.button>
+        </Link>
       </div>
 
       {/* Hover Glow Effect */}
@@ -232,3 +235,4 @@ const BootcampCard: React.FC<BootcampCardProps> = ({ bootcamp }) => {
 };
 
 export default BootcampCard;
+

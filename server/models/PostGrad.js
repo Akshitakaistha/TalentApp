@@ -49,6 +49,35 @@ const postgradSchema = new mongoose.Schema({
   courseDetails: {
     type: String,
     required: true
+  },
+  eligibilityCriteria: {
+    type: String, 
+    required: true
+  },
+  certificationProvided: {
+    type: String,
+    required: true
+  },
+  scholarshipAvailable: {
+    type: Boolean, 
+    required: true
+  },
+  enrollmentDeadline: {
+    type: Date,
+    required: true
+  },
+  batchStartDate: {
+    type: Date,
+    required: true
+  },
+  totalSeats: {
+    type: Number,
+    required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    // required: true
   }
 }, {
   timestamps: true

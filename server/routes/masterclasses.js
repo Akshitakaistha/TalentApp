@@ -1,12 +1,15 @@
-
 const express = require('express');
 const router = express.Router();
 const Masterclass = require('../models/Masterclass');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const multiUpload = upload.fields([
+  { name: 'masterClassBanner', maxCount: 1 },
+  { name: 'companyBanner', maxCount: 1 }
+]);
 
 // GET all masterclasses
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const masterclasses = await Masterclass.find().sort({ createdAt: -1 });
     res.json(masterclasses);
@@ -16,11 +19,12 @@ router.get('/', auth, async (req, res) => {
 });
 
 // POST create masterclass
-router.post('/', auth, upload.single('masterClassBanner'), async (req, res) => {
+router.post('/', auth, multiUpload, async (req, res) => {
   try {
     const masterclassData = {
       ...req.body,
-      masterClassBanner: req.file ? `/uploads/${req.file.filename}` : '',
+      masterClassBanner: req.files['masterClassBanner'] ? `/uploads/${req.files['masterClassBanner'][0].filename}` : '',
+      companyBanner: req.files['companyBanner'] ? `/uploads/${req.files['companyBanner'][0].filename}` : '',
       skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(s => s.trim())
     };
 
@@ -42,32 +46,16 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-router.put('/:id', auth, upload.single('masterClassBanner'), async (req, res) => {
+// New route to get masterclass details by ID
+router.get('/:id', async (req, res) => {
   try {
-    const updateData = {
-      ...req.body,
-      skills: Array.isArray(req.body.skills)
-        ? req.body.skills
-        : req.body.skills.split(',').map((s) => s.trim())
-    };
-
-    if (req.file) {
-      updateData.MasterClassBanner = `/uploads/${req.file.filename}`;
+    const masterclass = await Masterclass.findById(req.params.id);
+    if (!masterclass) {
+      return res.status(404).json({ message: 'Masterclass not found' });
     }
-
-    const updatedMasterClass = await Masterclass.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-
-    if (!updatedMasterClass) {
-      return res.status(404).json({ message: 'MasterClass not found' });
-    }
-
-    res.json(updatedMasterClass);
+    res.json(masterclass);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 

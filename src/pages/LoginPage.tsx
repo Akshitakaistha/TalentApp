@@ -16,22 +16,53 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login , user } = useAuth();
   const navigate = useNavigate();
 
   /**
    * Function will navigate to dashboard if credentials are corrects otherwise show invalid crdentials.
    */
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setError('');
+  //   const success = await login(username, password);
+  //   if (success) {
+  //     // Redirect based on user role
+  //     const userRole = localStorage.getItem('userRole');
+  //     if (userRole === 'superadmin') {
+  //       navigate('/dashboard');
+  //     } else {
+  //       console.log(user);
+  //       navigate(`/individual-admin/dashboard/${user?.id}`);
+  //     }
+  //   } else {
+  //     setError('Invalid credentials. Please try again.');
+  //   }
+  //   setLoading(false);
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+  
     const success = await login(username, password);
+  
     if (success) {
-      navigate('/dashboard');
+      const userRole = localStorage.getItem('userRole');
+      const storedUser = localStorage.getItem('user');
+      const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+  
+      if (userRole === 'superadmin') {
+        navigate('/dashboard');
+      } else {
+        navigate(`/individual-admin/dashboard/${parsedUser?.id}`);
+      }
     } else {
       setError('Invalid credentials. Please try again.');
     }
+  
     setLoading(false);
   };
 

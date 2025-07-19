@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
 
@@ -19,15 +18,22 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
     industryType: '',
     bootcampName: '',
     bootCampDesc: '',
-    skills: ['', '', ''],
+    skills: ['', '', '', '', ''],
     keynoteSpeaker: '',
     location: '',
     viewers: '',
     goal: '',
-    date: ''
+    date: '',
+    organizerName : '',
+    organizerWebsite: '',
+     contactEmail: '',
+      supportNumber: '',
+    certificateAvailable: ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
+  const [companyBannerFile, setCompanyBannerFile] = useState<File | null>(null);
+  const [companyBannerPreviewUrl, setCompanyBannerPreviewUrl] = useState<string>('');
 
   useEffect(() => {
     if (editData) {
@@ -36,14 +42,27 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
         keynoteSpeaker: editData.keynoteSpeaker || '',
         bootcampName: editData.bootcampName || '',
         bootCampDesc: editData.bootCampDesc || '',
-        skills: editData.skills || ['', '', ''],
+        skills: editData.skills || ['', '', '', '', ''],
         viewers: editData.viewers || '',
         location: editData.location || '',
         goal: editData.goal || '',
-        date: editData.date || ''
+        date: editData.date || '',
+        organizerName : editData.organizerName || '',
+    organizerWebsite: editData.organizerWebsite || '',
+     contactEmail: editData.contactEmail || '',
+      supportNumber: editData.supportNumber || '',
+      certificateAvailable: editData?.certificateAvailable || false
+
       });
-      if (editData.banner) {
-        setPreviewUrl(`http://localhost:3000${editData.banner}`);
+      if (editData.bootcampBanner) {
+        setBannerPreviewUrl(`http://localhost:3000${editData.bootcampBanner}`);
+      } else {
+        setBannerPreviewUrl('');
+      }
+      if (editData.keyNotePic) {
+        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.keyNotePic}`);
+      } else {
+        setCompanyBannerPreviewUrl('');
       }
     } else {
       setFormData({
@@ -51,24 +70,42 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
         keynoteSpeaker: '',
         bootcampName: '',
         bootCampDesc: '',
-        skills: ['', '', ''],
+        skills: ['', '', '', '', ''],
         viewers: '',
         location: '',
         goal: '',
-        date:''
+        date:'',
+        organizerName : '',
+    organizerWebsite: '',
+     contactEmail: '',
+      supportNumber: '',
+    certificateAvailable: ''
       });
-      setPreviewUrl('');
+      setBannerPreviewUrl('');
       setBannerFile(null);
+      setCompanyBannerPreviewUrl('');
+      setCompanyBannerFile(null);
     }
   }, [editData, isOpen]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData(prev => ({
+  //     ...prev,
+  //     [name]: value
+  //   }));
+  // };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
+
 
   const handleSkillChange = (index: number, value: string) => {
     const newSkills = [...formData.skills];
@@ -79,12 +116,21 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setBannerFile(file);
       const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      setBannerPreviewUrl(url);
+    }
+  };
+
+  const handleCompanyBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCompanyBannerFile(file);
+      const url = URL.createObjectURL(file);
+      setCompanyBannerPreviewUrl(url);
     }
   };
 
@@ -105,6 +151,9 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
     if (bannerFile) {
       submitData.append('bootcampBanner', bannerFile);
     }
+    if (companyBannerFile) {
+      submitData.append('companyBanner', companyBannerFile);
+    }
     
     onSubmit(submitData);
   };
@@ -122,7 +171,7 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
             <input
               type="file"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={handleBannerFileChange}
               className="hidden"
               id="banner-upload"
             />
@@ -130,8 +179,8 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
               htmlFor="banner-upload"
               className="cursor-pointer flex flex-col items-center"
             >
-              {previewUrl ? (
-                <img src={previewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+              {bannerPreviewUrl ? (
+                <img src={bannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
               ) : (
                 <Upload className="h-12 w-12 text-gray-400 mb-2" />
               )}
@@ -139,6 +188,32 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
             </label>
           </div>
         </div>
+        <div>
+  <label className="block text-sm font-medium text-gray-700 mb-2">
+    Keynote Speaker Picture
+  </label>
+  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleCompanyBannerFileChange}
+      className="hidden"
+      id="keynote-pic-upload"
+    />
+    <label
+      htmlFor="keynote-pic-upload"
+      className="cursor-pointer flex flex-col items-center"
+    >
+      {companyBannerPreviewUrl ? (
+        <img src={companyBannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+      ) : (
+        <Upload className="h-12 w-12 text-gray-400 mb-2" />
+      )}
+      <span className="text-sm text-gray-600">Click to upload keynote speaker image</span>
+    </label>
+  </div>
+</div>
+
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -265,6 +340,73 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
               required
             />
           </div>
+          <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Organizer Name
+            </label>
+            <input
+              type="text"
+              name="organizerName"
+              value={formData.organizerName}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Oraganization Website
+            </label>
+            <input
+              type="text"
+              name="organizerWebsite"
+              value={formData.organizerWebsite}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+        </div>
+        <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Contact Email
+            </label>
+            <input
+              type="email"
+              name="contactEmail"
+              value={formData.contactEmail}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Support Number
+            </label>
+            <input
+              type="number"
+              name="supportNumber"
+              value={formData.supportNumber}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div className="flex items-center space-x-3">
+  <label htmlFor="certificateAvailable" className="text-sm font-medium text-gray-700">
+    Certificate Available
+  </label>
+  <input
+    type="checkbox"
+    id="certificateAvailable"
+    name="certificateAvailable"
+    checked={formData.certificateAvailable}
+    onChange={handleInputChange}
+    className="toggle-checkbox h-5 w-10 rounded-full bg-gray-300 border-2 appearance-none cursor-pointer relative transition-colors duration-200 checked:bg-blue-600"
+  />
+</div>
         <div className="flex justify-end space-x-4 pt-4">
           <button
             type="button"

@@ -6,6 +6,14 @@ const masterclassSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  keyNotePic:{
+    type: String,
+    // required: true
+  },
+  companyBanner: {
+    type: String,
+    // required: true
+  },
   viewers: {
     type: Number,
     default: 0
@@ -46,6 +54,26 @@ const masterclassSchema = new mongoose.Schema({
   masterClassDesc: {
     type: String,
     required: true
+  },
+  meetingLink: {
+    type: String
+  },
+  externalEventId: {
+    type: String // If using Zoom, Calendly, etc.
+  },
+  startTime: {
+    type: Date
+  },
+  endTime: {
+    type: Date
+  },
+  duration: {
+    type: String
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    // required: true
   }
 }, {
   timestamps: true

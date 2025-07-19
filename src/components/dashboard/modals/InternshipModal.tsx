@@ -1,7 +1,7 @@
 /**
  * Used to create the modal for internships.
  */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
 
 interface InternshipModalProps {
@@ -22,17 +22,24 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
     jobType: '',
     internshipName: '',
     description: '',
-    skills: ['', '', ''],
+    skills: ['', '', '', '', ''],
     companyName: '',
     stipend: '',
     duration: '',
     location: '',
     workingHours: '',
     jobProfile: '',
-    shiftType: ''
+    shiftType: '',
+    companyDesc: '',
+    perks: '',
+    softSkills: ['', '', '', '', ''],
+    freeOrPaid: '',
+    lastDateToApply: ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
+  const [companyBannerFile, setCompanyBannerFile] = useState<File | null>(null);
+  const [companyBannerPreviewUrl, setCompanyBannerPreviewUrl] = useState<string>('');
 
   useEffect(() => {
     if (editData) {
@@ -41,17 +48,29 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
         jobType: editData.jobType || '',
         internshipName: editData.internshipName || '',
         description: editData.description || '',
-        skills: editData.skills || ['', '', ''],
+        skills: editData.skills || ['', '', '', '', ''],
         companyName: editData.companyName || '',
         stipend: editData.stipend || '',
         duration: editData.duration || '',
         location: editData.location || '',
         workingHours: editData.workingHours || '',
         jobProfile: editData.jobProfile || '',
-        shiftType: editData.shiftType || ''
+        shiftType: editData.shiftType || '',
+        companyDesc: editData.companyDesc || '',
+        perks: editData.perks || '',
+        softSkills: editData.softSkills || ['', '', '', '', ''],
+        freeOrPaid: editData.freeOrPaid || '',
+        lastDateToApply: editData.lastDateToApply || ''
       });
       if (editData.internshipBanner) {
-        setPreviewUrl(`http://localhost:3000${editData.internshipBanner}`);
+        setBannerPreviewUrl(`http://localhost:3000${editData.internshipBanner}`);
+      } else {
+        setBannerPreviewUrl('');
+      }
+      if (editData.companyBanner) {
+        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+      } else {
+        setCompanyBannerPreviewUrl('');
       }
     } else {
       setFormData({
@@ -59,17 +78,24 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
         jobType: '',
         internshipName: '',
         description: '',
-        skills: ['', '', ''],
+        skills: ['', '', '', '', ''],
         companyName: '',
         stipend: '',
         duration: '',
         location: '',
         workingHours: '',
         jobProfile: '',
-        shiftType: ''
+        shiftType: '',
+        companyDesc: '',
+        perks: '',
+        softSkills: ['', '', '', '', ''],
+        freeOrPaid: '',
+        lastDateToApply: ''
       });
-      setPreviewUrl('');
+      setBannerPreviewUrl('');
       setBannerFile(null);
+      setCompanyBannerPreviewUrl('');
+      setCompanyBannerFile(null);
     }
   }, [editData, isOpen]);
 
@@ -90,12 +116,30 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSoftSkillsChange = (index: number, value: string) => {
+    const newSkills = [...formData.softSkills];
+    newSkills[index] = value;
+    setFormData(prev => ({
+      ...prev,
+      softSkills: newSkills
+    }));
+  };
+
+  const handleBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setBannerFile(file);
       const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      setBannerPreviewUrl(url);
+    }
+  };
+
+  const handleCompanyBannerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCompanyBannerFile(file);
+      const url = URL.createObjectURL(file);
+      setCompanyBannerPreviewUrl(url);
     }
   };
 
@@ -110,9 +154,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
       } else {
         submitData.append(key, value as string);
       }
-    }); 
+    });
     if (bannerFile) {
       submitData.append('internshipBanner', bannerFile);
+    }
+    if (companyBannerFile) {
+      submitData.append('companyBanner', companyBannerFile);
     }
     onSubmit(submitData);
   };
@@ -130,7 +177,7 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={handleBannerFileChange}
                 className="hidden"
                 id="banner-upload"
               />
@@ -138,12 +185,37 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
                 htmlFor="banner-upload"
                 className="cursor-pointer flex flex-col items-center"
               >
-                {previewUrl ? (
-                  <img src={previewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+                {bannerPreviewUrl ? (
+                  <img src={bannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
                 ) : (
                   <Upload className="h-12 w-12 text-gray-400 mb-2" />
                 )}
                 <span className="text-sm text-gray-600">Click to upload banner</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Company Logo
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleCompanyBannerFileChange}
+                className="hidden"
+                id="company-banner-upload"
+              />
+              <label
+                htmlFor="company-banner-upload"
+                className="cursor-pointer flex flex-col items-center"
+              >
+                {companyBannerPreviewUrl ? (
+                  <img src={companyBannerPreviewUrl} alt="Preview" className="h-32 w-48 object-cover rounded mb-2" />
+                ) : (
+                  <Upload className="h-12 w-12 text-gray-400 mb-2" />
+                )}
+                <span className="text-sm text-gray-600">Click to upload company banner</span>
               </label>
             </div>
           </div>
@@ -179,11 +251,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Internship Name
+              Internship Title
             </label>
             <input
               type="text"
               name="internshipName"
+              placeholder="Full Stack Internship"
               value={formData.internshipName}
               onChange={handleInputChange}
               className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -192,20 +265,33 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
+              Company Description
             </label>
             <textarea
-              name="description"
-              value={formData.description}
+              name="companyDesc"
+              value={formData.companyDesc}
               onChange={handleInputChange}
-              rows={3}
+              rows={10}
               className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Skills (3 required)
+              Internship Description
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              rows={10}
+              className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Technical Skills 
             </label>
             <div className="space-y-2">
               {formData.skills.map((skill, index) => (
@@ -215,6 +301,24 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
                   value={skill}
                   onChange={(e) => handleSkillChange(index, e.target.value)}
                   placeholder={`Skill ${index + 1}`}
+                  className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Soft Skills 
+            </label>
+            <div className="space-y-2">
+              {formData.softSkills.map((skill, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  value={skill}
+                  onChange={(e) => handleSoftSkillsChange(index, e.target.value)}
+                  placeholder={`SoftSkills ${index + 1}`}
                   className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
@@ -259,6 +363,7 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
                 name="duration"
                 value={formData.duration}
                 onChange={handleInputChange}
+                placeholder='3 Months'
                 className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
@@ -287,6 +392,7 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
                 name="workingHours"
                 value={formData.workingHours}
                 onChange={handleInputChange}
+                placeholder="Part-Time | Full-Time"
                 className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
@@ -311,7 +417,7 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Job Profile
+              Eligibility
             </label>
             <textarea
               name="jobProfile"
@@ -322,6 +428,53 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
               required
             />
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Perks & Benifits
+            </label>
+            <textarea
+              name="perks"
+              value={formData.perks}
+              onChange={handleInputChange}
+              rows={5}
+              className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Last Date to Apply
+    </label>
+    <input
+      type="date"
+      name="lastDateToApply"
+      value={formData.lastDateToApply}
+      onChange={handleInputChange}
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      required
+    />
+  </div>
+
+  <div className="flex items-center space-x-3 mt-6">
+    <label htmlFor="freeOrPaid" className="block text-sm font-medium text-gray-700">
+      Is this Paid?
+    </label>
+    <input
+      id="freeOrPaid"
+      type="checkbox"
+      checked={formData.freeOrPaid === 'true'}
+      onChange={(e) => {
+        setFormData(prev => ({
+          ...prev,
+          freeOrPaid: e.target.checked ? 'true' : 'false'
+        }));
+      }}
+      className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+    />
+    <span className="text-sm text-gray-600">{formData.freeOrPaid === 'true' ? 'Paid' : 'Unpaid'}</span>
+  </div>
+</div>
           <div className="flex justify-end space-x-4 pt-4">
             <button
               type="button"

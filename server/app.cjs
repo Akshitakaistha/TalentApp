@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -19,10 +18,14 @@ const bootcampRoutes = require('./routes/bootcamps');
 const postgradRoutes = require('./routes/postgrad');
 const globalRoutes = require('./routes/global');
 const masterclassRoutes = require('./routes/masterclasses');
+const applicationsRoutes = require('./routes/applications');
+
+const superadminRoutes = require('./routes/superadmin');
+const adminRoutes = require('./routes/admins');
+const individualAdminRoutes = require('./routes/individualAdmin');
 
 const app = express();
 
-// Middleware
 // Middleware
 app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:3001'],
@@ -41,10 +44,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB connection (optional)
 if (mongoose) {
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/talentapp', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).then(() => {
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/talentapp')
+  .then(() => {
     console.log('📦 Connected to MongoDB');
   }).catch((err) => {
     console.log('⚠️  MongoDB connection failed:', err.message);
@@ -52,15 +53,20 @@ if (mongoose) {
 } else {
   console.log('⚠️  Running without database connection');
 }
+app.use('/api/auth', authRoutes);
+app.use('/api/superadmin', superadminRoutes);
+app.use('/api/admins', adminRoutes);
+app.use('/api/individual-admin', individualAdminRoutes);
 
 // Routes
-app.use('/api/auth', authRoutes);
+// app.use('/api/auth', authRoutes);
 app.use('/api/internships', internshipRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/bootcamps', bootcampRoutes);
 app.use('/api/postgrad', postgradRoutes);
 app.use('/api/global', globalRoutes);
 app.use('/api/masterclasses', masterclassRoutes);
+app.use('/api/applications', applicationsRoutes);
 
 const PORT = process.env.PORT || 3000;
 

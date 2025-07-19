@@ -1,4 +1,3 @@
-
 /**
  * Function is used tob create the dashboard page along with sidebar and their contents.
  */
@@ -13,6 +12,8 @@ import DashboardBootcamps from '../components/dashboard/DashboardBootcamps';
 import DashboardPostGrad from '../components/dashboard/DashboardPostGrad';
 import DashboardGlobal from '../components/dashboard/DashboardGlobal';
 import DashboardMasterclasses from '../components/dashboard/DashboardMasterclasses';
+import DashboardAdmins from '../components/dashboard/DashboardAdmins';
+import AdminDashboard from './AdminDashboard';
 
 const Dashboard: React.FC = () => {
   const { logout } = useAuth();
@@ -50,7 +51,8 @@ const Dashboard: React.FC = () => {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
-                    viewBox="0 0 24 24"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5" />
                   </svg>
@@ -77,6 +79,8 @@ const Dashboard: React.FC = () => {
           <Route path="/postgrad" element={<DashboardPostGrad />} />
           <Route path="/global" element={<DashboardGlobal />} />
           <Route path="/masterclasses" element={<DashboardMasterclasses />} />
+          <Route path="/admins" element={<DashboardAdmins />} />
+          <Route path="/admin/:id" element={<AdminDashboard />} />
         </Routes>
       </div>
     </div>

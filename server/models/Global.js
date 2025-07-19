@@ -49,6 +49,11 @@ const globalSchema = new mongoose.Schema({
   industryDomain: {
     type: String,
     required: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+    required: true
   }
 }, {
   timestamps: true

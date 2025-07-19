@@ -1,0 +1,73 @@
+if (editData) {
+      setFormData({
+        specialization: editData.specialization || '',
+        courseName: editData.jobType || '',
+        organizationName: editData.organizationName || '',
+        courseFee: editData.courseFee || '',
+        skills: editData.skills || ['', '', ''],
+        duration: editData.duration || '',
+        location: editData.location || '',
+        organizationWebsite: editData.organizationWebsite || '',
+        emi: editData.emi || '',
+        courseType: editData.courseType || '',
+        courseDetails: editData.courseDetails || '',
+      });
+      if (editData.jobBanner) {
+        setPreviewUrl(`http://localhost:3000${editData.banner}`);
+      }
+    } else {
+      setFormData({
+        specialization: '',
+        courseName: '',
+        organizationName: '',
+        courseFee: '',
+        skills: ['', '', ''],
+        duration: '',
+        location: '',
+        organizationWebsite: '',
+        emi: '',
+        courseType: '',
+        courseDetails: ''
+      });
+      setPreviewUrl('');
+      setBannerFile(null);
+    }
+  }, [editData, isOpen]);
+=======
+  useEffect(() => {
+    if (editData) {
+      setFormData({
+        specialization: editData.specialization || '',
+        courseName: editData.courseName || '',
+        organizationName: editData.organizationName || '',
+        courseFee: editData.courseFee || '',
+        skills: editData.skills || ['', '', ''],
+        duration: editData.duration || '',
+        location: editData.location || '',
+        organizationWebsite: editData.organizationWebsite || '',
+        emi: editData.emi || '',
+        courseType: editData.courseType || '',
+        courseDetails: editData.courseDetails || '',
+      });
+      if (editData.banner) {
+        setPreviewUrl(`http://localhost:3000${editData.banner}`);
+      }
+    } else {
+      setFormData({
+        specialization: '',
+        courseName: '',
+        organizationName: '',
+        courseFee: '',
+        skills: ['', '', ''],
+        duration: '',
+        location: '',
+        organizationWebsite: '',
+        emi: '',
+        courseType: '',
+        courseDetails: ''
+      });
+      setPreviewUrl('');
+      setBannerFile(null);
+    }
+  }, [editData, isOpen]);
+<<<<<<< REPLACE

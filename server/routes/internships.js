@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Internship = require('../models/Internship');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+const multiUpload = upload.fields([
+  { name: 'internshipBanner', maxCount: 1 },
+  { name: 'companyBanner', maxCount: 1 }
+]);
 
 // GET all internships
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const internships = await Internship.find().sort({ createdAt: -1 });
     res.json(internships);
@@ -15,11 +19,12 @@ router.get('/', auth, async (req, res) => {
 });
 
 // POST create internship
-router.post('/', auth, upload.single('internshipBanner'), async (req, res) => {
+router.post('/', auth, multiUpload, async (req, res) => {
   try {
     const internshipData = {
       ...req.body,
-      internshipBanner: req.file ? `/uploads/${req.file.filename}` : '',
+      internshipBanner: req.files['internshipBanner'] ? `/uploads/${req.files['internshipBanner'][0].filename}` : '',
+      companyBanner: req.files['companyBanner'] ? `/uploads/${req.files['companyBanner'][0].filename}` : '',
       skills: Array.isArray(req.body.skills) ? req.body.skills : req.body.skills.split(',').map(s => s.trim()),
       stipend: req.body.stipend || ''
     };
@@ -43,7 +48,7 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 // PUT update internship
-router.put('/:id', auth, upload.single('internshipBanner'), async (req, res) => {
+router.put('/:id', auth, multiUpload, async (req, res) => {
   try {
     const updateData = {
       ...req.body,
@@ -52,8 +57,11 @@ router.put('/:id', auth, upload.single('internshipBanner'), async (req, res) => 
         : req.body.skills.split(',').map((s) => s.trim())
     };
 
-    if (req.file) {
-      updateData.internshipBanner = `/uploads/${req.file.filename}`;
+    if (req.files['internshipBanner']) {
+      updateData.internshipBanner = `/uploads/${req.files['internshipBanner'][0].filename}`;
+    }
+    if (req.files['companyBanner']) {
+      updateData.companyBanner = `/uploads/${req.files['companyBanner'][0].filename}`;
     }
 
     const updatedInternship = await Internship.findByIdAndUpdate(
@@ -72,5 +80,16 @@ router.put('/:id', auth, upload.single('internshipBanner'), async (req, res) => 
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const internship = await Internship.findById(req.params.id);
+    if (!internship) {
+      return res.status(404).json({ message: 'Internship not found' });
+    }
+    res.json(internship);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;

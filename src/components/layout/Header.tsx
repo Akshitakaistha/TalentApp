@@ -46,6 +46,13 @@ const Header: React.FC = () => {
                 <LogIn className="h-4 w-4" />
                 <span>Login</span>
               </Link>
+              <Link
+                to="/register"
+                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <LogIn className="h-4 w-4" />
+                <span>Register</span>
+              </Link>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"

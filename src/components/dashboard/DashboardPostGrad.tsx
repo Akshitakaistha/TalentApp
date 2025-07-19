@@ -69,6 +69,7 @@ const DashboardPostGrad: React.FC = () => {
   );
 
   return (
+    <>
     <DashboardSection
       title="PGP Programs"
       apiEndpoint="postgrad"
@@ -76,6 +77,8 @@ const DashboardPostGrad: React.FC = () => {
       tableHeaders={tableHeaders}
       renderTableRow={renderTableRow}
     />
+    <div>gfysgauyfgsgfsgif</div>
+    </>
   );
 };
 
