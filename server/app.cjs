@@ -68,6 +68,14 @@ app.use('/api/global', globalRoutes);
 app.use('/api/masterclasses', masterclassRoutes);
 app.use('/api/applications', applicationsRoutes);
 
+// Serve React build files
+const frontendPath = path.join(__dirname, '../dist');
+app.use(express.static(frontendPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, '0.0.0.0', (err) => {
