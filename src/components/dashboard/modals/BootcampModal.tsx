@@ -431,7 +431,7 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-black">
-            {editData ? 'Edit Internship' : 'Create New Internship'}
+            {editData ? 'Edit Internship' : 'Create New Bootcamp'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />

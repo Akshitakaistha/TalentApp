@@ -188,7 +188,7 @@ const BootcampCard: React.FC<BootcampCardProps> = ({ bootcamp }) => {
 
         {/* Skills */}
         {bootcamp.skills.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-2 mb-2">
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Skills You'll Learn</h3>
             <div className="flex flex-wrap gap-2">
               {bootcamp.skills.slice(0, 4).map((skill, idx) => (
@@ -218,7 +218,7 @@ const BootcampCard: React.FC<BootcampCardProps> = ({ bootcamp }) => {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3.5 rounded-2xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl group/btn"
+          className="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3.5 rounded-2xl text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl group/btn"
         >
           <span>Explore Bootcamp</span>
           <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />

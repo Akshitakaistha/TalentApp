@@ -78,6 +78,23 @@ const internshipSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  companySize: {
+    type: Number,
+    required: true
+  },
+  foundingYear: {
+    type: Number,
+    required: true
+  },
+  companyType: {
+    type: String
+  },
+  industryType: {
+    type: String
+  },
+  companyWebsiteUrl: {
+    type: String
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',

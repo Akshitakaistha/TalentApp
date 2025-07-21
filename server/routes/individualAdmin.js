@@ -200,7 +200,7 @@ router.post('/dashboard/:adminId/postgrads', authenticateAdmin, multiUpload, asy
       industryType,
       date,
       postGradDesc,
-      
+
     } = req.body;
 
     if (
@@ -302,12 +302,48 @@ router.post('/dashboard/:adminId/globals', authenticateAdmin, multiUpload, async
       location,
       industryType,
       date,
-      globalDesc
+      globalDesc,
+      specialization,
+      courseName,
+      organizationName,
+      courseFee,
+      duration,
+      organizationWebsite,
+      courseType,
+      courseDetails,
+      industryDomain,
+      supportContactEmail,
+      mentorSupportAvailable,
+      discussionForumLink,
+      certificationProvided,
+      certificateTemplate,
+      language,
+      enrollmentDeadline,
+      startDate,
+      endDate,
     } = req.body;
 
     if (
       !globalName || !description || !skills || !location ||
-      !industryType || !date || !globalDesc
+      !industryType || !date || !globalDesc ||
+      !specialization ||
+      !courseName ||
+      !organizationName ||
+      !courseFee ||
+      !duration ||
+      !organizationWebsite ||
+      !courseType ||
+      !courseDetails ||
+      !industryDomain ||
+      !supportContactEmail ||
+      !mentorSupportAvailable ||
+      !discussionForumLink ||
+      !certificationProvided ||
+      !certificateTemplate ||
+      !language ||
+      !enrollmentDeadline ||
+      !startDate ||
+      !endDate
     ) {
       return res.status(400).json({ success: false, message: 'Missing required fields' });
     }
@@ -329,6 +365,24 @@ router.post('/dashboard/:adminId/globals', authenticateAdmin, multiUpload, async
       globalDesc,
       globalBanner,
       companyBanner,
+      specialization,
+      courseName,
+      organizationName,
+      courseFee,
+      duration,
+      organizationWebsite,
+      courseType,
+      courseDetails,
+      industryDomain,
+      supportContactEmail,
+      mentorSupportAvailable,
+      discussionForumLink,
+      certificationProvided,
+      certificateTemplate,
+      language,
+      enrollmentDeadline,
+      startDate,
+      endDate,
       createdBy: admin._id
     });
 
@@ -414,7 +468,12 @@ router.post('/dashboard/:adminId/internships', authenticateAdmin, multiUpload, a
       skills,
       softSkills,
       freeOrPaid,
-      lastDateToApply
+      lastDateToApply,
+      companySize,
+      foundingYear,
+      companyType,
+      industryType,
+      companyWebsiteUrl
     } = req.body;
 
     if (
@@ -432,7 +491,12 @@ router.post('/dashboard/:adminId/internships', authenticateAdmin, multiUpload, a
       !companyDesc ||
       !perks ||
       !freeOrPaid ||
-      !lastDateToApply
+      !lastDateToApply ||
+      !companySize ||
+      !foundingYear ||
+      !companyType ||
+      !industryType ||
+      !companyWebsiteUrl
     ) {
       return res.status(400).json({ success: false, message: 'Missing required fields' });
     }
@@ -464,6 +528,11 @@ router.post('/dashboard/:adminId/internships', authenticateAdmin, multiUpload, a
       skills,
       softSkills,
       lastDateToApply,
+      companySize,
+      foundingYear,
+      companyType,
+      industryType,
+      companyWebsiteUrl,
       createdBy: admin._id,
     });
 
@@ -680,7 +749,15 @@ router.post('/dashboard/:adminId/masterclasses', authenticateAdmin, multiUpload,
       location,
       industryType,
       date,
-      masterClassDesc
+      masterClassDesc,
+      meetingLink,
+      externalEventId,
+      startTime,
+      endTime,
+      duration,
+      hostOrganization,
+      contactEmail,
+      hostWebsite
     } = req.body;
 
     if (
@@ -691,7 +768,15 @@ router.post('/dashboard/:adminId/masterclasses', authenticateAdmin, multiUpload,
       !location ||
       !industryType ||
       !date ||
-      !masterClassDesc
+      !masterClassDesc ||
+      !meetingLink ||
+      !externalEventId ||
+      !startTime ||
+      !endTime ||
+      !duration ||
+      !hostOrganization ||
+      !contactEmail ||
+      !hostWebsite
     ) {
       return res.status(400).json({ success: false, message: 'Missing required fields' });
     }
@@ -714,6 +799,14 @@ router.post('/dashboard/:adminId/masterclasses', authenticateAdmin, multiUpload,
       date,
       masterClassBanner,
       companyBanner,
+      meetingLink,
+      externalEventId,
+      startTime,
+      endTime,
+      duration,
+      hostOrganization,
+      contactEmail,
+      hostWebsite,
       createdBy: admin._id
     });
 

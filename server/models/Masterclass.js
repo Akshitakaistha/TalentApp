@@ -70,6 +70,15 @@ const masterclassSchema = new mongoose.Schema({
   duration: {
     type: String
   },
+  hostOrganization: {
+    type: String
+  },
+  contactEmail: {
+    type: String
+  },
+  hostWebsite: {
+    type: String
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',

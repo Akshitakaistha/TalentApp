@@ -93,11 +93,16 @@ const CounselingSection: React.FC = () => {
   return (
     <section id="counseling" className="py-16 bg-gradient-to-r from-blue-900 to-blue-800 text-white">
       <div className="container mx-auto px-4">
-        <SectionTitle 
-          title="Educational Counseling" 
-          subtitle="Get personalized guidance from our expert counselors to make informed decisions about your education and career path"
-        />
-        
+      <div className="mb-12 text-center">
+      <h2 className="text-3xl font-bold text-white mb-2">Educational Counseling</h2>
+        <p className="text-white max-w-2xl mx-auto">
+          Get personalized guidance from our expert counselors to make informed decisions about your education and career path
+          </p>
+      <div className="mt-3 inline-block">
+        <div className="h-1 w-24 bg-blue-700 rounded"></div>
+        <div className="h-1 w-12 bg-blue-500 rounded mt-1"></div>
+      </div>
+    </div>  
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
           {/* Counseling Information */}
           <div>

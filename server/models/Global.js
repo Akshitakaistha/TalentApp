@@ -50,10 +50,40 @@ const globalSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  supportContactEmail: { //Starting from here
+    type: String
+  },
+  mentorSupportAvailable: {
+    type: Boolean,
+    default: false
+  },
+  discussionForumLink: {
+    type: String
+  },
+  certificationProvided: {
+    type: Boolean,
+    default: false
+  },
+  certificateTemplate: {
+    type: String // URL to certificate design
+  },
+  language: {
+    type: String,
+    default: 'English'
+  },
+  enrollmentDeadline: {
+    type: Date
+  },
+  startDate: {
+    type: Date
+  },
+  endDate: {
+    type: Date
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',
-    required: true
+    // required: true
   }
 }, {
   timestamps: true

@@ -35,15 +35,6 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
   }, [user?.id]);
 
 
-  const authHeader = () => {
-    const token = getToken();
-    return {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-        'Content-Type': 'multipart/form-data'
-      }
-    };
-  };
 
   // const fetchItems = async () => {
   //   try {
@@ -91,15 +82,26 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
     }
   };  
 
+  // Removed authHeader function and reverted handleSubmit to original code
+
   const handleSubmit = async (formData: FormData) => {
     try {
       if (editingItem) {
         // Update existing item
-        await axios.put(`http://localhost:3000/api/${apiEndpoint}/${editingItem._id}`, formData, authHeader()
-        );
+        await axios.put(`http://localhost:3000/api/${apiEndpoint}/${editingItem._id}`, formData, {
+          headers: {
+            Authorization: getToken() ? `Bearer ${getToken()}` : '',
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       } else {
         // Create new item
-        await axios.post(`http://localhost:3000/api/${apiEndpoint}`, formData,authHeader());
+        await axios.post(`http://localhost:3000/api/${apiEndpoint}`, formData, {
+          headers: {
+            Authorization: getToken() ? `Bearer ${getToken()}` : '',
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       }
       fetchItems();
       setIsModalOpen(false);

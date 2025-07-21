@@ -298,6 +298,11 @@ interface Internship {
   perks: string;
   freeOrPaid: boolean;
   lastDateToApply: string;
+  companySize: number;
+  industryType: string;
+  companyWebsiteUrl: string;
+  foundingYear: number;
+  companyType: string;
 }
 
 const InternshipDetails: React.FC = () => {
@@ -475,13 +480,13 @@ const InternshipDetails: React.FC = () => {
         <p className="text-sm text-gray-700">{internship.companyDesc}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 text-sm text-gray-800">
-          <p><strong>Size:</strong> 5001 to 10000 Employees</p>
-          <p><strong>Founded:</strong> 1961</p>
-          <p><strong>Type:</strong> Company - Public</p>
-          <p><strong>Industry:</strong> Machinery Manufacturing</p>
+          <p><strong>Size:</strong> {internship.companySize} Employees</p>
+          <p><strong>Founded:</strong>{internship.foundingYear}</p>
+          <p><strong>Type:</strong> Company - {internship.companyType}</p>
+          <p><strong>Industry:</strong> {internship.industryType}</p>
         </div>
         <p className="text-blue-600 underline text-sm">
-          Website URL: <a href="https://www.accenture.com" target="_blank" rel="noopener noreferrer">www.accenture.com</a>
+          Website URL: <a href={internship.companyWebsiteUrl} target="_blank" rel="noopener noreferrer">{internship.companyWebsiteUrl}</a>
         </p>
       </div>
 

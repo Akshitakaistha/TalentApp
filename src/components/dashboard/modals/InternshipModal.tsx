@@ -34,7 +34,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
     perks: '',
     softSkills: ['', '', '', '', ''],
     freeOrPaid: '',
-    lastDateToApply: ''
+    lastDateToApply: '',
+    companySize: '',
+      foundingYear : '',
+      companyType : '',
+      industryType : '',
+      companyWebsiteUrl : ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
@@ -60,7 +65,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
         perks: editData.perks || '',
         softSkills: editData.softSkills || ['', '', '', '', ''],
         freeOrPaid: editData.freeOrPaid || '',
-        lastDateToApply: editData.lastDateToApply || ''
+        lastDateToApply: editData.lastDateToApply || '',
+        companySize : editData.companySize || '',
+      foundingYear : editData.foundingYear || '',
+      companyType: editData.companyType || '',
+      industryType : editData.industryType || '',
+      companyWebsiteUrl: editData.companyWebsiteUrl || ''
       });
       if (editData.internshipBanner) {
         setBannerPreviewUrl(`http://localhost:3000${editData.internshipBanner}`);
@@ -90,7 +100,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
         perks: '',
         softSkills: ['', '', '', '', ''],
         freeOrPaid: '',
-        lastDateToApply: ''
+        lastDateToApply: '',
+        companySize : '',
+      foundingYear: '',
+      companyType: '',
+      industryType: '',
+      companyWebsiteUrl : ''
       });
       setBannerPreviewUrl('');
       setBannerFile(null);
@@ -441,6 +456,80 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
               required
             />
           </div>
+          <div className="grid grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Company Size
+    </label>
+    <input
+      type="number"
+      name="companySize"
+      value={formData.companySize}
+      onChange={handleInputChange}
+      placeholder="e.g., 50-100 employees"
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Founding Year
+    </label>
+    <input
+      type="number"
+      name="foundingYear"
+      value={formData.foundingYear}
+      onChange={handleInputChange}
+      placeholder="e.g., 2015"
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+</div>
+
+<div className="grid grid-cols-2 gap-4 mt-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Company Type
+    </label>
+    <input
+      type="text"
+      name="companyType"
+      value={formData.companyType}
+      onChange={handleInputChange}
+      placeholder="e.g., Startup, MNC"
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Industry Type
+    </label>
+    <input
+      type="text"
+      name="industryType"
+      value={formData.industryType}
+      onChange={handleInputChange}
+      placeholder="e.g., IT, Healthcare"
+      className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+</div>
+
+<div className="mt-4">
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Company Website URL
+  </label>
+  <input
+    type="url"
+    name="companyWebsiteUrl"
+    value={formData.companyWebsiteUrl}
+    onChange={handleInputChange}
+    placeholder="https://example.com"
+    className="w-full text-black border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
           <div className="grid grid-cols-2 gap-4">
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-1">

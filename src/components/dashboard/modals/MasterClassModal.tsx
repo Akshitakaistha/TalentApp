@@ -22,12 +22,20 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
     industryType: '',
     masterClassName: '',
     masterClassDesc: '',
-    skills: ['', '', ''],
+    skills: ['', '', '', '', ''],
     keynoteSpeaker: '',
     location: '',
     viewers: '',
     goal: '',
-    date: ''
+    date: '',
+    meetingLink : '',
+      externalEventId: '',
+      startTime:'',
+      endTime: '',
+      duration: '',
+      hostOrganization : '',
+      contactEmail: '',
+      hostWebsite: ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string>('');
@@ -45,7 +53,15 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
         viewers: editData.viewers || '',
         location: editData.location || '',
         goal: editData.goal || '',
-        date: editData.date || ''
+        date: editData.date || '',
+        meetingLink : editData.meetingLink || '',
+      externalEventId: editData.externalEventId || '',
+      startTime: editData.startTime || '',
+      endTime: editData.endTime || '',
+      duration: editData.duration || '',
+      hostOrganization : editData.hostOrganization || '',
+      contactEmail: editData.contactEmail || '',
+      hostWebsite: editData.hostWebsite || ''
       });
       if (editData.masterClassBanner) {
         setBannerPreviewUrl(`http://localhost:3000${editData.masterClassBanner}`);
@@ -63,11 +79,19 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
         keynoteSpeaker: '',
         masterClassName: '',
         masterClassDesc: '',
-        skills: ['', '', ''],
+        skills: ['', '', '', '', ''],
         viewers: '',
         location: '',
         goal: '',
-        date:''
+        date:'',
+        meetingLink : '',
+      externalEventId: '',
+      startTime:'',
+      endTime: '',
+      duration: '',
+      hostOrganization : '',
+      contactEmail: '',
+      hostWebsite: ''
       });
       setBannerPreviewUrl('');
       setBannerFile(null);
@@ -120,6 +144,14 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
         (value as string[]).forEach((skill, index) => {
           submitData.append(`skills[${index}]`, skill);
         });
+      } else if (key === 'startTime' || key === 'endTime') {
+        // Convert time string (HH:mm) to ISO string with today's date
+        if (value) {
+          const today = new Date();
+          const [hours, minutes] = (value as string).split(':').map(Number);
+          const dateObj = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes);
+          submitData.append(key, dateObj.toISOString());
+        }
       } else {
         submitData.append(key, value as string);
       }
@@ -316,6 +348,91 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
                 required
               />
             </div>
+            <div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">Meeting Link</label>
+  <input
+    type="text"
+    name="meetingLink"
+    value={formData.meetingLink}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">External Event ID</label>
+  <input
+    type="text"
+    name="externalEventId"
+    value={formData.externalEventId}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+<div className="grid grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+    <input
+      type="time"
+      name="startTime"
+      value={formData.startTime}
+      onChange={handleInputChange}
+      className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+    <input
+      type="time"
+      name="endTime"
+      value={formData.endTime}
+      onChange={handleInputChange}
+      className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+</div>
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">Duration (e.g. 1hr 30min)</label>
+  <input
+    type="text"
+    name="duration"
+    value={formData.duration}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+<div className="grid grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Host Organization</label>
+    <input
+      type="text"
+      name="hostOrganization"
+      value={formData.hostOrganization}
+      onChange={handleInputChange}
+      className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
+    <input
+      type="email"
+      name="contactEmail"
+      value={formData.contactEmail}
+      onChange={handleInputChange}
+      className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+</div>
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">Host Website</label>
+  <input
+    type="url"
+    name="hostWebsite"
+    value={formData.hostWebsite}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
           <div className="flex justify-end space-x-4 pt-4">
             <button
               type="button"
@@ -340,7 +457,7 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-black">
-            {editData ? 'Edit Internship' : 'Create New Internship'}
+            {editData ? 'Edit Internship' : 'Create New MasterClass'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />

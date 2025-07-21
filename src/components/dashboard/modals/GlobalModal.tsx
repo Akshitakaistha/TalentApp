@@ -20,13 +20,22 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
     courseName: '',
     organizationName: '',
     courseFee: '',
-    skills: ['', '', ''],
+    skills: ['', '', '' , '', ''],
     duration: '',
     location: '',
     organizationWebsite: '',
     industryDomain: '',
     courseType: '',
     courseDetails: '',
+      supportContactEmail : '',
+      mentorSupportAvailable : '',
+      discussionForumLink : '',
+      certificationProvided : '',
+      certificateTemplate : '',
+      language: '',
+      enrollmentDeadline : '',
+      startDate : '',
+      endDate : ''
   });
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -45,6 +54,15 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
         industryDomain: editData.industryDomain || '',
         courseType: editData.courseType || '',
         courseDetails: editData.courseDetails || '',
+        supportContactEmail : editData.supportContactEmail || '',
+      mentorSupportAvailable : editData.mentorSupportAvailable || '',
+      discussionForumLink : editData.discussionForumLink || '',
+      certificationProvided : editData.certificationProvided || '',
+      certificateTemplate : editData.certificateTemplate || '',
+      language: editData.language || '',
+      enrollmentDeadline : editData.enrollmentDeadline || '',
+      startDate : editData.startDate || '',
+      endDate : editData.endDate || ''
       });
       if (editData.jobBanner) {
         setPreviewUrl(`http://localhost:3000${editData.banner}`);
@@ -55,13 +73,22 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
         courseName: '',
         organizationName: '',
         courseFee: '',
-        skills: ['', '', ''],
+        skills: ['', '', '' , '', ''],
         duration: '',
         location: '',
         organizationWebsite: '',
         industryDomain: '',
         courseType: '',
-        courseDetails: ''
+        courseDetails: '',
+        supportContactEmail : '',
+      mentorSupportAvailable : '',
+      discussionForumLink : '',
+      certificationProvided : '',
+      certificateTemplate : '',
+      language: '',
+      enrollmentDeadline : '',
+      startDate : '',
+      endDate : ''
       });
       setPreviewUrl('');
       setBannerFile(null);
@@ -121,8 +148,8 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold">
-            {editData ? 'Edit Internship' : 'Create New Internship'}
+          <h2 className="text-xl font-bold text-black">
+            {editData ? 'Edit Internship' : 'Create New Global Program'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />
@@ -319,6 +346,137 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
               required
             />
           </div>
+            {/* Support Contact Email */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Support Contact Email
+  </label>
+  <input
+    type="email"
+    name="supportContactEmail"
+    value={formData.supportContactEmail}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* Mentor Support Available */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Mentor Support Available
+  </label>
+  <select
+    name="mentorSupportAvailable"
+    value={formData.mentorSupportAvailable}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 rounded-md px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  >
+    <option value="">Select</option>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+  </select>
+</div>
+
+{/* Discussion Forum Link */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Discussion Forum Link
+  </label>
+  <input
+    type="text"
+    name="discussionForumLink"
+    value={formData.discussionForumLink}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* Certification Provided */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Certification Provided
+  </label>
+  <select
+    name="certificationProvided"
+    value={formData.certificationProvided}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 rounded-md px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  >
+    <option value="">Select</option>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+  </select>
+</div>
+
+{/* Certificate Template */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Certificate Template URL
+  </label>
+  <input
+    type="text"
+    name="certificateTemplate"
+    value={formData.certificateTemplate}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* Language */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Language
+  </label>
+  <input
+    type="text"
+    name="language"
+    value={formData.language}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* Enrollment Deadline */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Enrollment Deadline
+  </label>
+  <input
+    type="date"
+    name="enrollmentDeadline"
+    value={formData.enrollmentDeadline}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* Start Date */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Start Date
+  </label>
+  <input
+    type="date"
+    name="startDate"
+    value={formData.startDate}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+
+{/* End Date */}
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    End Date
+  </label>
+  <input
+    type="date"
+    name="endDate"
+    value={formData.endDate}
+    onChange={handleInputChange}
+    className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
 
           <div className="flex justify-end space-x-4 pt-4">
             <button
