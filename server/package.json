@@ -1,7 +1,7 @@
 {
   "name": "talentapp",
   "version": "1.0.0",
-  "main": "server/app.cjs", // correct relative path
+  "main": "server/app.cjs",
   "scripts": {
     "start": "node server/app.cjs"
   },
@@ -12,3 +12,4 @@
     "dotenv": "^16.1.4"
   }
 }
+
