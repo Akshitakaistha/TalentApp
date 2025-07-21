@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { API_BASE_URL } from '../../../App';
 
 interface MasterClassModalProps {
   isOpen: boolean;
@@ -64,12 +65,12 @@ const MasterClassModal: React.FC<MasterClassModalProps> = ({
       hostWebsite: editData.hostWebsite || ''
       });
       if (editData.masterClassBanner) {
-        setBannerPreviewUrl(`http://localhost:3000${editData.masterClassBanner}`);
+        setBannerPreviewUrl(`${API_BASE_URL}${editData.masterClassBanner}`);
       } else {
         setBannerPreviewUrl('');
       }
       if (editData.companyBanner) {
-        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+        setCompanyBannerPreviewUrl(`${API_BASE_URL}${editData.companyBanner}`);
       } else {
         setCompanyBannerPreviewUrl('');
       }

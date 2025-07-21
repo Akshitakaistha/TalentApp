@@ -3,6 +3,7 @@
  */
 import React, { useState, useEffect } from "react";
 import { X, Upload } from "lucide-react";
+import { API_BASE_URL } from "../../../App";
 
 interface PostGradModalProps {
   isOpen: boolean;
@@ -61,7 +62,7 @@ const PostGradModal: React.FC<PostGradModalProps> = ({
         totalSeats: editData.totalSeats || "",
       });
       if (editData.banner) {
-        setPreviewUrl(`http://localhost:3000${editData.banner}`);
+        setPreviewUrl(`${API_BASE_URL}${editData.banner}`);
       }
     } else {
       setFormData({

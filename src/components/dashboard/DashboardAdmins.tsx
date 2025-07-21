@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-const API_BASE_URL = 'http://localhost:3000/api';
+import { API_BASE_URL } from "../../App";
 
 interface Admin {
   _id: string;

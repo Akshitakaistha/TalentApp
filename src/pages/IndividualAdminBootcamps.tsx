@@ -83,6 +83,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import BootcampModal from '../components/dashboard/modals/BootcampModal';
 import AdminLayout from '../components/layout/AdminLayout';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../App';
 
 const IndividualAdminBootcamps: React.FC = () => {
     const { user } = useAuth();
@@ -103,7 +104,7 @@ const IndividualAdminBootcamps: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.bootcampBanner && (
           <img
-            src={`http://localhost:3000${item.bootcampBanner}`}
+            src={`${API_BASE_URL}${item.bootcampBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

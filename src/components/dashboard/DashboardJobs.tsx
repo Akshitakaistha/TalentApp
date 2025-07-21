@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import JobModal from './modals/JobModal';
+import { API_BASE_URL } from '../../App';
 
 const DashboardJobs: React.FC = () => {
   const tableHeaders = [
@@ -26,7 +27,7 @@ const DashboardJobs: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.jobBanner && (
           <img
-            src={`http://localhost:3000${item.jobBanner}`}
+            src={`${API_BASE_URL}${item.jobBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

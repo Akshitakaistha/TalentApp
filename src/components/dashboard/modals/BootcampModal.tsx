@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { API_BASE_URL } from '../../../App';
 
 interface BootcampModalProps {
   isOpen: boolean;
@@ -55,12 +56,12 @@ const BootcampModal: React.FC<BootcampModalProps> = ({
 
       });
       if (editData.bootcampBanner) {
-        setBannerPreviewUrl(`http://localhost:3000${editData.bootcampBanner}`);
+        setBannerPreviewUrl(`${API_BASE_URL}${editData.bootcampBanner}`);
       } else {
         setBannerPreviewUrl('');
       }
       if (editData.keyNotePic) {
-        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.keyNotePic}`);
+        setCompanyBannerPreviewUrl(`${API_BASE_URL}${editData.keyNotePic}`);
       } else {
         setCompanyBannerPreviewUrl('');
       }

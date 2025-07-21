@@ -3,8 +3,9 @@ import { Building2, DollarSign, Briefcase, Clock, ChevronLeft, ChevronRight } fr
 import { motion } from 'framer-motion';
 import JobCard from '../ui/JobCard';
 import axios from 'axios';
+import { API_BASE_URLs } from '../../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 interface Job {
   _id: string;
@@ -37,7 +38,7 @@ const JobsSection: React.FC = () => {
    useEffect(() => {
     const fetchJobDetailSection = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/jobs`);
+        const res = await axios.get(`${API_BASE_URLs}/jobs`);
         setJobs(res.data);
         setFilteredJobs(res.data);
       } catch (error) {

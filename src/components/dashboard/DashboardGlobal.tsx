@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import GlobalModal from './modals/GlobalModal';
+import { API_BASE_URL } from "../../App";
 
 const DashboardGlobal: React.FC = () => {
   const tableHeaders = [
@@ -23,7 +24,7 @@ const DashboardGlobal: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.banner && (
           <img
-            src={`http://localhost:3000${item.banner}`}
+            src={`${API_BASE_URL}${item.banner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

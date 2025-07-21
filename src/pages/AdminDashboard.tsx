@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Sidebar from '../components/dashboard/Sidebar';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URLs } from '../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 interface Internship {
   _id: string;
@@ -35,7 +35,7 @@ const AdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/internships`, {
+      const res = await axios.get(`${API_BASE_URLs}/internships`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : '',
         },
@@ -55,7 +55,7 @@ const AdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/jobs`, {
+      const res = await axios.get(`${API_BASE_URLs}/jobs`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : '',
         },

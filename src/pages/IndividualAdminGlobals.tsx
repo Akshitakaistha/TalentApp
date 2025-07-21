@@ -74,6 +74,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import GlobalModal from '../components/dashboard/modals/GlobalModal';
 import { useAuth } from '../context/AuthContext';
 import AdminLayout from '../components/layout/AdminLayout';
+import { API_BASE_URL } from '../App';
 
 const IndividualAdminGlobals: React.FC = () => {
   const { user } = useAuth();
@@ -95,7 +96,7 @@ const IndividualAdminGlobals: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.banner && (
           <img
-            src={`http://localhost:3000${item.banner}`}
+            src={`${API_BASE_URL}${item.banner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

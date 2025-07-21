@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { GraduationCap, CreditCard, Users, Target } from 'lucide-react';
 import PGPCard from '../ui/PGPCard';
+import { API_BASE_URLs } from '../../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 interface PGPCourse {
   _id: string;
@@ -51,7 +52,7 @@ const PostGradSection: React.FC = () => {
   useEffect(() => {
     const fetchPGPSection = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/postgrad`);
+        const res = await axios.get(`${API_BASE_URLs}/postgrad`);
         setPgpCourses(res.data);
         setFilteredCourses(res.data);
       } catch (error) {

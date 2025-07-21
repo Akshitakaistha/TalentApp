@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../App';
 
 interface DashboardSectionProps {
   title: string;
@@ -59,7 +60,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
     try {
       const token = getToken();
       const { data } = await axios.get(
-        `http://localhost:3000/api/${apiEndpoint}`,
+        `${API_BASE_URL}/api/${apiEndpoint}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
@@ -88,7 +89,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
     try {
       if (editingItem) {
         // Update existing item
-        await axios.put(`http://localhost:3000/api/${apiEndpoint}/${editingItem._id}`, formData, {
+        await axios.put(`${API_BASE_URL}/api/${apiEndpoint}/${editingItem._id}`, formData, {
           headers: {
             Authorization: getToken() ? `Bearer ${getToken()}` : '',
             'Content-Type': 'multipart/form-data'
@@ -96,7 +97,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
         });
       } else {
         // Create new item
-        await axios.post(`http://localhost:3000/api/${apiEndpoint}`, formData, {
+        await axios.post(`${API_BASE_URL}/api/${apiEndpoint}`, formData, {
           headers: {
             Authorization: getToken() ? `Bearer ${getToken()}` : '',
             'Content-Type': 'multipart/form-data'
@@ -121,7 +122,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({
       try {
         const token = getToken();
         await axios.delete(
-          `http://localhost:3000/api/${apiEndpoint}/${id}`,
+          `${API_BASE_URL}/api/${apiEndpoint}/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         fetchItems();

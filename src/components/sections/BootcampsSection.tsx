@@ -134,8 +134,9 @@ import SectionTitle from '../ui/SectionTitle';
 import FilterBar from '../ui/FilterBar';
 import { Bootcamp } from '../../types';
 import BootcampCard from '../ui/BootcampCard';
+import { API_BASE_URLs } from '../../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 const BootcampsSection: React.FC = () => {
   const [bootcamps, setBootcamps] = useState<Bootcamp[]>([]);
@@ -159,7 +160,7 @@ const BootcampsSection: React.FC = () => {
   useEffect(() => {
     const fetchBootcamps = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/bootcamps`);
+        const res = await axios.get(`${API_BASE_URLs}/bootcamps`);
         const data: Bootcamp[] = res.data;
 
         setBootcamps(data);

@@ -3,6 +3,7 @@ import { Play, Users, ChevronLeft, ChevronRight, Video, Award } from 'lucide-rea
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import MasterClassCard from '../ui/MasterClassCard';
+import { API_BASE_URLs } from '../../App';
 
 interface MasterClass {
   _id: string;
@@ -158,7 +159,7 @@ interface MasterClass {
 
 const MASTERCLASSES_PER_PAGE = 3;
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 const MasterClassSection: React.FC = () => {
   const [masterClasses, setMasterClasses] = useState<MasterClass[]>([]);
@@ -170,7 +171,7 @@ const MasterClassSection: React.FC = () => {
   useEffect(() => {
     const fetchMasterClasses = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/masterclasses`);
+        const res = await axios.get(`${API_BASE_URLs}/masterclasses`);
         setMasterClasses(res.data);
         setFilteredMasterClasses(res.data);
       } catch (error) {

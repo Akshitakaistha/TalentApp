@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import PostGradModal from './modals/PostGradModal';
+import { API_BASE_URL } from '../../App';
 const DashboardPostGrad: React.FC = () => {
   const tableHeaders = [
     'Banner',
@@ -22,7 +23,7 @@ const DashboardPostGrad: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.banner && (
           <img
-            src={`http://localhost:3000${item.banner}`}
+            src={`${API_BASE_URL}${item.banner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

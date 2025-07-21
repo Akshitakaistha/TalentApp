@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import BootcampModal from './modals/BootcampModal';
+import { API_BASE_URL } from "../../App";
 
 const DashboardBootcamps: React.FC = () => {
   const tableHeaders = [
@@ -22,7 +23,7 @@ const DashboardBootcamps: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.bootcampBanner && (
           <img
-            src={`http://localhost:3000${item.bootcampBanner}`}
+            src={`${API_BASE_URL}${item.bootcampBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

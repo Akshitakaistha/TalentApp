@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import MasterClassModal from './modals/MasterClassModal';
+import { API_BASE_URL } from '../../App';
 
 const DashboardMasterclasses: React.FC = () => {
   const tableHeaders = [
@@ -22,7 +23,7 @@ const DashboardMasterclasses: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.masterClassBanner && (
           <img
-            src={`http://localhost:3000${item.masterClassBanner}`}
+            src={`${API_BASE_URL}${item.masterClassBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Calendar, User, ArrowRight, Star, Users, Target, Play } from 'lucide-react';
+import { MapPin, Calendar, User, ArrowRight, Target} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +24,6 @@ interface MasterClassCardProps {
 }
 
 const MasterClassCard: React.FC<MasterClassCardProps> = ({ masterClass }) => {
-  const API_BASE_URL = 'http://localhost:3000';
 
   const formattedDate = new Date(masterClass.date).toLocaleString('en-GB', {
     day: '2-digit',

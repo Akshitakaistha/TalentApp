@@ -74,6 +74,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import MasterClassModal from '../components/dashboard/modals/MasterClassModal';
 import { useAuth } from '../context/AuthContext';
 import AdminLayout from '../components/layout/AdminLayout';
+import { API_BASE_URL } from '../App';
 
 const IndividualAdminMasterclasses: React.FC = () => {
    const { user } = useAuth();
@@ -94,7 +95,7 @@ const IndividualAdminMasterclasses: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.masterClassBanner && (
           <img
-            src={`http://localhost:3000${item.masterClassBanner}`}
+            src={`${API_BASE_URL}${item.masterClassBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

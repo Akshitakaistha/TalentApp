@@ -148,8 +148,9 @@ import SectionTitle from '../ui/SectionTitle';
 import CustomFilterBar from '../ui/CustomFilterBar';
 import InternshipCard from '../ui/InternshipCard';
 import { Internship } from '../../types';
+import { API_BASE_URLs } from '../../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 const ITEMS_PER_PAGE = 3;
 
 const InternshipsSection: React.FC = () => {
@@ -162,7 +163,7 @@ const InternshipsSection: React.FC = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/internships`);
+        const res = await axios.get(`${API_BASE_URLs}/internships`);
         const data = res.data;
         setInternships(data);
         setFilteredInternships(data);

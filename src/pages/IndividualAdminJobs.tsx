@@ -74,6 +74,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import JobModal from '../components/dashboard/modals/JobModal';
 import AdminLayout from '../components/layout/AdminLayout';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../App';
 
 const IndividualAdminJobs: React.FC = () => {
   const { user } = useAuth();
@@ -98,7 +99,7 @@ const IndividualAdminJobs: React.FC = () => {
        <td className="px-6 py-4 whitespace-nowrap">
          {item.jobBanner && (
            <img
-             src={`http://localhost:3000${item.jobBanner}`}
+             src={`${API_BASE_URL}${item.jobBanner}`}
              alt="Banner"
              className="h-12 w-20 object-cover rounded"
            />

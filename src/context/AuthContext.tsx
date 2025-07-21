@@ -13,7 +13,7 @@
 
 // const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// const API_BASE_URL = `http://localhost:3000/api`;
+// const API_BASE_URLs = `http://localhost:3000/api`;
 
 // export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 //   const [user, setUser] = useState<User | null>(null);
@@ -31,7 +31,7 @@
 
 //   const login = async (username: string, password: string): Promise<boolean> => {
 //     try {
-//       const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+//       const response = await axios.post(`${API_BASE_URLs}/auth/login`, {
 //         username,
 //         password,
 //       });
@@ -90,7 +90,7 @@
 
 // const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// const API_BASE_URL = `http://localhost:3000/api`;
+// const API_BASE_URLs = `http://localhost:3000/api`;
 
 // export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 //   const [user, setUser] = useState<User | null>(null);
@@ -109,7 +109,7 @@
 
 //   const login = async (username: string, password: string): Promise<boolean> => {
 //     try {
-//       const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+//       const response = await axios.post(`${API_BASE_URLs}/auth/login`, {
 //         username,
 //         password,
 //       });
@@ -161,6 +161,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URLs } from '../App';
 
 interface User {
   id?: string;
@@ -178,7 +179,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE_URL = `http://localhost:3000/api`;
+// const API_BASE_URLs = `http://localhost:3000/api`;
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -204,7 +205,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+      const response = await axios.post(`${API_BASE_URLs}/auth/login`, {
         username,
         password,
       });

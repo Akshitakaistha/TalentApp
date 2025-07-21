@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { API_BASE_URL } from '../../../App';
 
 interface GlobalModalProps {
   isOpen: boolean;
@@ -65,7 +66,7 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
       endDate : editData.endDate || ''
       });
       if (editData.jobBanner) {
-        setPreviewUrl(`http://localhost:3000${editData.banner}`);
+        setPreviewUrl(`${API_BASE_URL}${editData.banner}`);
       }
     } else {
       setFormData({

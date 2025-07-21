@@ -33,6 +33,7 @@ import PostGradDetails from './pages/PostGradDetails';
 import GlobalDetails from './pages/GlobalDetails';
 
 export const API_BASE_URL = 'http://localhost:3000';
+export const API_BASE_URLs = `http://localhost:3000/api`;
 
 function HomePage() {
   return (

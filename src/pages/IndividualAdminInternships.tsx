@@ -4,6 +4,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import InternshipModal from '../components/dashboard/modals/InternshipModal';
 import AdminLayout from '../components/layout/AdminLayout';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../App';
 
 const IndividualAdminInternships: React.FC = () => {
   const { user } = useAuth();
@@ -25,7 +26,7 @@ const IndividualAdminInternships: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.internshipBanner && (
           <img
-            src={`http://localhost:3000${item.internshipBanner}`}
+            src={`${API_BASE_URL}${item.internshipBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />

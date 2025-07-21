@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import AdminLayout from '../components/layout/AdminLayout';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URLs } from '../App';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URLs = `${API_BASE_URL}/api`;
 
 interface Internship {
   _id: string;
@@ -57,7 +58,7 @@ const IndividualAdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/individual-admin/dashboard`, {
+      const res = await axios.get(`${API_BASE_URLs}/individual-admin/dashboard`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : '',
         },

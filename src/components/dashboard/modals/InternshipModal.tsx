@@ -3,6 +3,7 @@
  */
 import { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { API_BASE_URL } from '../../../App';
 
 interface InternshipModalProps {
   isOpen: boolean;
@@ -73,12 +74,12 @@ const InternshipModal: React.FC<InternshipModalProps> = ({
       companyWebsiteUrl: editData.companyWebsiteUrl || ''
       });
       if (editData.internshipBanner) {
-        setBannerPreviewUrl(`http://localhost:3000${editData.internshipBanner}`);
+        setBannerPreviewUrl(`${API_BASE_URL}${editData.internshipBanner}`);
       } else {
         setBannerPreviewUrl('');
       }
       if (editData.companyBanner) {
-        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+        setCompanyBannerPreviewUrl(`${API_BASE_URL}${editData.companyBanner}`);
       } else {
         setCompanyBannerPreviewUrl('');
       }

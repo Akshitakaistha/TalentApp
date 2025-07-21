@@ -3,6 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
+import { API_BASE_URL } from '../../../App';
 
 interface JobModalProps {
   isOpen: boolean;
@@ -71,12 +72,12 @@ const JobModal: React.FC<JobModalProps> = ({
         companyType: editData.companyType || ''
       });
       if (editData.jobBanner) {
-        setBannerPreviewUrl(`http://localhost:3000${editData.jobBanner}`);
+        setBannerPreviewUrl(`${API_BASE_URL}${editData.jobBanner}`);
       } else {
         setBannerPreviewUrl('');
       }
       if (editData.companyBanner) {
-        setCompanyBannerPreviewUrl(`http://localhost:3000${editData.companyBanner}`);
+        setCompanyBannerPreviewUrl(`${API_BASE_URL}${editData.companyBanner}`);
       } else {
         setCompanyBannerPreviewUrl('');
       }

@@ -5,6 +5,7 @@ import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import DashboardSection from './DashboardSection';
 import InternshipModal from './modals/InternshipModal';
+import { API_BASE_URL } from '../../App';
 
 const DashboardInternships: React.FC = () => {
   const tableHeaders = [
@@ -23,7 +24,7 @@ const DashboardInternships: React.FC = () => {
       <td className="px-6 py-4 whitespace-nowrap">
         {item.internshipBanner && (
           <img
-            src={`http://localhost:3000${item.internshipBanner}`}
+            src={`${API_BASE_URL}${item.internshipBanner}`}
             alt="Banner"
             className="h-12 w-20 object-cover rounded"
           />
