@@ -4,8 +4,9 @@
   "type": "commonjs",
   "main": "app.cjs",
   "scripts": {
-    "start": "node app.cjs"
-  },
+  "start": "node server/index.js",
+  "build": "cd client && npm install && npm run build"
+},
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
