@@ -34,10 +34,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(cors({
-  origin: "*", // or restrict to specific domain if needed
-}));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -72,16 +68,11 @@ app.use('/api/global', globalRoutes);
 app.use('/api/masterclasses', masterclassRoutes);
 app.use('/api/applications', applicationsRoutes);
 
+// const path = require('path'); // Ensure path is required at the top if not already
+
 // Serve static files from the React app build directory
-const frontendPath = path.join(__dirname, '../dist');
-app.use(express.static(frontendPath));
 
-// For any other routes, serve the index.html file to enable client-side routing
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
-
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {

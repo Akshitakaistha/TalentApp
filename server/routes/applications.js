@@ -69,15 +69,15 @@ router.post('/', upload.single('resume'), async (req, res) => {
 });
 
 // Get applications by type and related entity id
-router.get('/:applicationType/:relatedTo', async (req, res) => {
-  try {
-    const { applicationType, relatedTo } = req.params;
-    const applications = await Application.find({ applicationType, relatedTo }).sort({ createdAt: -1 });
-    res.json({ success: true, data: applications });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error fetching applications' });
-  }
-});
+// router.get('/:applicationType/:relatedTo', async (req, res) => {
+//   try {
+//     const { applicationType, relatedTo } = req.params;
+//     const applications = await Application.find({ applicationType, relatedTo }).sort({ createdAt: -1 });
+//     res.json({ success: true, data: applications });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Server error fetching applications' });
+//   }
+// });
 
 // Update application by id
 router.put('/:id', upload.single('resume'), async (req, res) => {
