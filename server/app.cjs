@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 require('dotenv').config();
 
 // Only require mongoose if we actually need database functionality
@@ -67,8 +67,6 @@ app.use('/api/postgrad', postgradRoutes);
 app.use('/api/global', globalRoutes);
 app.use('/api/masterclasses', masterclassRoutes);
 app.use('/api/applications', applicationsRoutes);
-
-const path = require('path'); // Ensure path is required at the top if not already
 
 // Serve static files from the React app build directory
 const frontendPath = path.join(__dirname, '../dist');
