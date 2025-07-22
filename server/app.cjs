@@ -27,13 +27,21 @@ const individualAdminRoutes = require('./routes/individualAdmin');
 const app = express();
 
 // Middleware
+// app.use(cors({
+//   origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:3001'],
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
+// app.use(cors({ origin: '*' }));
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:3001'],
-  credentials: true,
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
-app.use(cors({ origin: '*' }));
+
+app.options('*', cors()); // Handle preflight
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -68,15 +76,6 @@ app.use('/api/postgrad', postgradRoutes);
 app.use('/api/global', globalRoutes);
 app.use('/api/masterclasses', masterclassRoutes);
 app.use('/api/applications', applicationsRoutes);
-
-// Serve static files from the React app build directory
-// const frontendPath = path.join(__dirname, 'dist');
-// app.use(express.static(frontendPath));
-
-// // For any other routes, serve the index.html file to enable client-side routing
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(frontendPath, 'index.html'));
-// });
 
 const PORT = process.env.PORT || 6888;
 
