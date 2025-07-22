@@ -80,33 +80,33 @@ router.post('/', upload.single('resume'), async (req, res) => {
 // });
 
 // Update application by id
-router.put('/:id', upload.single('resume'), async (req, res) => {
-  try {
-    const updateData = { ...req.body };
-    if (req.file) {
-      updateData.resume = `/uploads/resumes/${req.file.filename}`;
-    }
-    const updatedApplication = await Application.findByIdAndUpdate(req.params.id, updateData, { new: true });
-    if (!updatedApplication) {
-      return res.status(404).json({ success: false, message: 'Application not found' });
-    }
-    res.json({ success: true, data: updatedApplication });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error updating application' });
-  }
-});
+// router.put('/:id', upload.single('resume'), async (req, res) => {
+//   try {
+//     const updateData = { ...req.body };
+//     if (req.file) {
+//       updateData.resume = `/uploads/resumes/${req.file.filename}`;
+//     }
+//     const updatedApplication = await Application.findByIdAndUpdate(req.params.id, updateData, { new: true });
+//     if (!updatedApplication) {
+//       return res.status(404).json({ success: false, message: 'Application not found' });
+//     }
+//     res.json({ success: true, data: updatedApplication });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Server error updating application' });
+//   }
+// });
 
 // Delete application by id
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletedApplication = await Application.findByIdAndDelete(req.params.id);
-    if (!deletedApplication) {
-      return res.status(404).json({ success: false, message: 'Application not found' });
-    }
-    res.json({ success: true, message: 'Application deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error deleting application' });
-  }
-});
+// router.delete('/:id', async (req, res) => {
+//   try {
+//     const deletedApplication = await Application.findByIdAndDelete(req.params.id);
+//     if (!deletedApplication) {
+//       return res.status(404).json({ success: false, message: 'Application not found' });
+//     }
+//     res.json({ success: true, message: 'Application deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Server error deleting application' });
+//   }
+// });
 
 module.exports = router;
