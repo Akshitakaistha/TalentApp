@@ -32,8 +32,8 @@ import BootcampDetails from './pages/BootcampDetails';
 import PostGradDetails from './pages/PostGradDetails';
 import GlobalDetails from './pages/GlobalDetails';
 
-export const API_BASE_URL = 'http://localhost:9000';
-export const API_BASE_URLs = `http://localhost:9000/api`;
+export const API_BASE_URL = 'http://localhost:6888';
+export const API_BASE_URLs = `http://localhost:6888/api`;
 
 function HomePage() {
   return (

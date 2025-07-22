@@ -77,7 +77,7 @@ app.use('/api/applications', applicationsRoutes);
 //   res.sendFile(path.join(frontendPath, 'index.html'));
 // });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 6888;
 
 app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {
