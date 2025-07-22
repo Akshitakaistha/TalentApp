@@ -34,6 +34,10 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(cors({
+  origin: "*", // or restrict to specific domain if needed
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -77,7 +81,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9000;
 
 app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {
